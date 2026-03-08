@@ -210,9 +210,9 @@ Solvers:
 
     parser.add_argument(
         "-s", "--solver",
-        choices=["RC2", "MAXHS", "WMAXCDCL", "OPENWBO"],
+        choices=["RC2", "MAXHS", "WMAXCDCL", "OPENWBO", "NONE"],
         default="RC2",
-        help="solver (default: RC2)"
+        help="solver backend (default: RC2). Use NONE to only generate WCNF."
     )
 
     parser.add_argument(
@@ -338,7 +338,7 @@ Solvers:
     if args.output and args.solver == "NONE":
         if args.verbose:
             print(f"\nBuilding WCNF ({args.encoding} encoding)...")
-        wcnf, name2idx = build_wcnf(problem, args.encoding, cfg)
+        wcnf, name2idx, _vpool = build_wcnf(problem, args.encoding, cfg)
         wcnf.to_file(args.output)
         print(f"WCNF saved to: {args.output}")
         return 0
